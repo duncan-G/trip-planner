@@ -100,5 +100,40 @@ select {
   background: #286090;
 }
 
+.list-group {
+  padding: 0;
+  font-size: 0.8em;
+}
 
+.preference {
+  list-style:  none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
 
+.preference > span {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-btn {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  font-size: 12px;
+  background: #fc8989;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #8d3131;
+}
+
+.remove-btn:active {
+  background: #a3221e;
+}

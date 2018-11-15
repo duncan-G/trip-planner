@@ -11,7 +11,7 @@ export class Itinerary {
       activities: this.getElements(this.IDS[2])
     };
     this.data = [];
-    this.hotel = null;
+    this.hotels = [];
     this.restaurants = [];
     this.activities = [];
   }
@@ -50,16 +50,41 @@ export class Itinerary {
     return this.find(item => item.id === +id);
   }
 
+  addPreference(attraction, srcElement, preference) {
+    const li = document.createElement('li');
+    li.className = 'preference';
+    const span = document.createElement('span');
+    span.innerHTML = preference.name;
+    li.appendChild(span);
+    this[attraction].push(preference);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.innerHTML = 'x';
+    removeBtn.onclick = () => {
+      const i = this[attraction].indexOf(preference);
+      this[attraction].splice(i, 1);
+      li.remove();
+      removeBtn.remove();
+    };
+    li.appendChild(removeBtn);
+
+    srcElement.preferences.appendChild(li);
+  }
+
   addIteneraryBtn(attraction) {
     const attrElements = this.ELEMENTS[attraction];
     attrElements.addBtn.addEventListener('click', () => {
-      const li = document.createElement('li');
       const preferenceId = attrElements.choices.value;
-      li.innerHTML = this.getPreference.call(
+      let preference = this.getPreference.call(
         this.data[attraction],
         preferenceId
       );
-      attrElements.preferences.appendChild(li);
+      if (preference) {
+        this.addPreference(attraction, attrElements, preference);
+      } else {
+        console.log('not found');
+      }
     });
   }
 
