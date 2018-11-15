@@ -50,6 +50,10 @@ export class Itinerary {
     return this.find(item => item.id === +id);
   }
 
+  preferenceExists(id) {
+    return !!this.find(item => item.id === +id);
+  }
+
   addPreference(attraction, srcElement, preference) {
     const li = document.createElement('li');
     li.className = 'preference';
@@ -76,14 +80,16 @@ export class Itinerary {
     const attrElements = this.ELEMENTS[attraction];
     attrElements.addBtn.addEventListener('click', () => {
       const preferenceId = attrElements.choices.value;
-      let preference = this.getPreference.call(
-        this.data[attraction],
-        preferenceId
-      );
-      if (preference) {
-        this.addPreference(attraction, attrElements, preference);
-      } else {
-        console.log('not found');
+      if (!this.preferenceExists.call(this[attraction], preferenceId)) {
+        let preference = this.getPreference.call(
+          this.data[attraction],
+          preferenceId
+        );
+        if (preference) {
+          this.addPreference(attraction, attrElements, preference);
+        } else {
+          console.log('not found');
+        }
       }
     });
   }
